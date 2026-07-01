@@ -22,8 +22,12 @@ from src.regions import make_regions, region_features
 from src.stability import rent_selection, kuncheva_index
 
 # ── Config ──────────────────────────────────────────────────────────────────
-MODALITY    = "NIR"
-CONDITION   = "Dry"
+DATASETS = [
+    ("NIR",  "Dry"),
+    ("NIR",  "Wet"),
+    ("FTIR", "Dry"),
+    ("FTIR", "Wet"),
+]
 N_REGIONS   = 50       # divide spectrum into 50 equal regions
 N_MODELS    = 100      # number of RENT subsampled models
 SUBSAMPLE   = 0.7      # fraction of samples per model
@@ -34,7 +38,7 @@ RANDOM_SEED = 42
 # ─────────────────────────────────────────────────────────────────────────────
 
 
-def run():
+def run(MODALITY, CONDITION):
     print(f"=== RENT Baseline | {CONDITION}-{MODALITY} ===\n")
 
     # 1. Load and preprocess
@@ -137,4 +141,6 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
+    for modality, condition in DATASETS:
+        run(modality, condition)
+        print()
